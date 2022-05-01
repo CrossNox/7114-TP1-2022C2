@@ -1,0 +1,22 @@
+Ignacio Javier Mermet - 98153
+
+# Impresion inicial del problema
+El problema es una variante del TSP donde tenemos el viajante tiene una capacidad máxima y cada punto a visitar puede o bien ser un putno de carga o de descarga.
+Este problema es conocido como CTSPPD [1].
+
+La suma de las demandas es de 11. Lo cual nos da indicios de que no hay mucho lugar para equivocarse al elegir.
+
+# Ideas para resolverlo
+Se me ocurren varios enfoques, explicados a continuación y ordenados crecientemente de acuerdo a que tan bien espero que funcionen:
+- 2-OPT: Si bien mediante este algoritmo seguramente pueda encontrar un camino muy corto, no veo como incorporar la restricción de capacidad
+- Backtracking: Una ventaja de la restricción de capacidad es que no tenemos que recorrer las 2^n posibilidades. Podemos cortar tempranamente
+  el árbol combinatorio y evitar gran parte de esas soluciones. Sin embargo, es mas complejo de programar y de correr.
+- Enfoque greedy: Dado un nodo, me muevo al siguiente que me permita cumplir la restricción de capacidad y que esté lo más cerca posible. Si
+  bien no será óptimo, es sencillo de programar, reproducir y entender.
+ 
+# Comentarios sobre los cambios
+
+# Comentarios finales
+ 
+# Referencias
+[1] - https://www.tau.ac.il/~anily/publications/21.pdf
