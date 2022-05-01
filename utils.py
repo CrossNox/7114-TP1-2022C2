@@ -52,6 +52,7 @@ def calcular_distancias(l, coords):
     total = 0
     for actual, prox in zip(l, l[1:]):
         total += dist(actual, prox, coords)
+    total += dist(l[-1], l[0], coords)
     return total
 
 
