@@ -1,7 +1,7 @@
 Ignacio Javier Mermet - 98153
 
-# Impresion inicial del problema
-El problema es una variante del TSP donde tenemos el viajante tiene una capacidad máxima y cada punto a visitar puede o bien ser un putno de carga o de descarga.
+# Impresión inicial del problema
+El problema es una variante del TSP donde tenemos el viajante tiene una capacidad máxima y cada punto a visitar puede o bien ser un punto de carga o de descarga.
 Este problema es conocido como CTSPPD [1].
 
 La suma de las demandas es de 11. Lo cual nos da indicios de que no hay mucho lugar para equivocarse al elegir.
@@ -13,13 +13,17 @@ Se me ocurren varios enfoques, explicados a continuación y ordenados crecientem
   el árbol combinatorio y evitar gran parte de esas soluciones. Sin embargo, es mas complejo de programar y de correr.
 - Enfoque greedy: Dado un nodo, me muevo al siguiente que me permita cumplir la restricción de capacidad y que esté lo más cerca posible. Si
   bien no será óptimo, es sencillo de programar, reproducir y entender.
- 
+
 # Comentarios sobre los cambios
 - 2opt no funcionó
 - la solución greedy es razonablemente rápida y buena
 - utilizar la solución de greedy como entrada para 2opt mejora mucho el resultado
+- mejoré todos los caminos de greedy con 2opt, pero no mejora nada
+- no pude hacer que 3opt termine
 
 # Comentarios finales
- 
+Mejorar la solución greedy mediante 2opt resulta en un algoritmo rápido y con buenos resultados.
+La complejidad asociada a programar la estrategia de backtracking no parece valer la pena. En particular por la complejidad algorítmica involucrada.
+
 # Referencias
 [1] - https://www.tau.ac.il/~anily/publications/21.pdf
