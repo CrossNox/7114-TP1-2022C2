@@ -17,6 +17,7 @@ Se me ocurren varios enfoques, explicados a continuación y ordenados crecientem
 # Comentarios sobre los cambios
 - 2opt no funcionó
 - la solución greedy es razonablemente rápida y buena
+- utilizar la solución de greedy como entrada para 2opt mejora mucho el resultado
 
 # Comentarios finales
  
