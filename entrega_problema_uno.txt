@@ -16,6 +16,7 @@ Se me ocurren varios enfoques, explicados a continuación y ordenados crecientem
  
 # Comentarios sobre los cambios
 - 2opt no funcionó
+- la solución greedy es razonablemente rápida y buena
 
 # Comentarios finales
  
