@@ -15,6 +15,7 @@ Se me ocurren varios enfoques, explicados a continuación y ordenados crecientem
   bien no será óptimo, es sencillo de programar, reproducir y entender.
  
 # Comentarios sobre los cambios
+- 2opt no funcionó
 
 # Comentarios finales
  
