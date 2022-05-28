@@ -1,0 +1,56 @@
+Ignacio Javier Mermet - 98153
+
+# Análisis de la situación problematica
+El problema es una variante del TSP donde tenemos el viajante tiene una capacidad máxima y cada punto a visitar puede o bien ser un punto de carga o de descarga.
+Este problema es conocido como CTSPPD [1].
+
+# Objetivo
+El objetivo es determinar el orden en el cual visitar cada sucursal bancaria de modo de visitar todas las sucursales de modo de minimizar la distancia total recorrida.
+
+# Hipotesis y supuestos
+- Solo se puede pasar una vez por cada sucursal
+- Se puede ir de cualquier sucursal a cualquier otra en linea recta
+- No hay factores externos que modifiquen las distancias entre sucursales
+- Las capacidades son exactas y no hay factores que las alteren
+- Se debe pasar por las sucursales con demanda 0
+- Se puede arrancar por cualquier sucursal
+- Se puede terminar en cualquier sucursal
+- Se utiliza la norma L2 como función de distancia
+
+# Variables de decisión
+- Y_ij (binarias). i, j pertenecen a  [1, DIMENSION + 1]. Implican que el recorrido incluye el trayecto de i a j.
+- U_i (enteras). i pertece a [1, DIMENSION + 1]. Es el número de orden en el cual se arriba a la sucursal i en el recorrido.
+- C_i (entera). i pertenece a [1, DIMENSION + 1]. Capacidad utilizada del camión al llegar a la sucursal i.
+
+# Constantes conocidas
+- DIMENSION: La cantidad de sucursales en el problema
+- DEMANDA_i: Donde i pertenece a [1, DIMENSION + 1]. La demanda de la sucursal i.
+- POS_i: Donde i pertenece a [1, DIMENSION+1]. La posicion de la sucursal i.
+
+# Modelo
+## Restricciones
+Cada sucursal se visita una sola vez:
+
+Para todo i en [1, DIMENSION+1]:
+\sum_{j=1, j != i} Y_ij = 1
+
+De cada sucursal solo sale un viaje:
+
+Para todo j en [1, DIMENSION+1]:
+\sum_{i=1, i != j} Y_ij = 1
+
+Evitamos subtours:
+Para todo i en [1, DIMENSION+1], para todo j en [1, DIMENSION+1], donde i != j:
+- M * (1 - Y_ij) + DEMANDA_j <= C_j - C_i <= DEMANDA_j + M * (1 - Y_ij)
+
+
+Nunca se incumple la capacidad:
+Para todo i en [1, DIMENSION+1]:
+0 <= C_i <= CAPACIDAD
+
+## Funcional
+MIN Z = \sum_{j=1}^{DIMENSION+1} \sum_{i=1, j!=i}^{DIMENSION+1} Y_ij * DISTANCIA_L2(POS_i, POS_j)
+
+
+# Referencias
+[1] - https://www.tau.ac.il/~anily/publications/21.pdf
