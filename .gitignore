@@ -128,4 +128,21 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+*.log
+*.fls
+*.synctex.gz
+*.fdb_latexmk
+*.aux
+_minted-informe/
+*.out
+*.bcf
+*.bbl
+*.blg
+*.run.xml
+*.dvi
+*.toc
+*.dot
+*.synctex(busy)
+
+
 problema_uno.txt

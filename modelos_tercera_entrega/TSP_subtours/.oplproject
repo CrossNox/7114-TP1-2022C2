@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?><project>
+    	
+    <version>1.0</version>
+    	
+    <description>TSP</description>
+    	
+    <configs>
+        		
+        <config default="true" name="Ejecucion" category="opl">
+            			
+            <ref name="tsp.mod" type="model">
+			</ref>
+            			
+            <ref name="params.dat" type="data">
+			</ref>
+            			
+            <ref name="tsp.dat" type="data">
+			</ref>
+            		
+        </config>
+        	
+    </configs>
+    	
+
+</project>
