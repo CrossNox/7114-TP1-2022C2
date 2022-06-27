@@ -85,7 +85,6 @@ Notemos que la solución se alcanza en un tiempo de $85.82$ segundos (más algun
 \subsection{Subtours}\label{Subtours}
 En este segundo modelo,
 
-Este
 
 \begin{figure}[H]
 \centering
@@ -122,18 +121,18 @@ En esta instancia, no es necesario revisar que el camino cumpla con las restricc
 \begin{figure}[H]
 \begin{minted}[]{text}
 Root node processing (before b&c):
-  Real time             =    5.64 sec. (3495.92 ticks)
+  Real time             =    9.67 sec. (6852.01 ticks)
 Parallel b&c, 32 threads:
-  Real time             =   78.54 sec. (41031.31 ticks)
-  Sync time (average)   =   22.18 sec.
-  Wait time (average)   =    0.08 sec.
+  Real time             =   64.71 sec. (31281.19 ticks)
+  Sync time (average)   =   20.94 sec.
+  Wait time (average)   =    0.04 sec.
                           ------------
-Total (root+branch&cut) =   84.18 sec. (44527.24 ticks)
+Total (root+branch&cut) =   74.38 sec. (38133.19 ticks)
 \end{minted}
 \caption{Fragmento de la salida bajo la solapa \texttt{Engine Log}}
 \end{figure}
 
-Vemos, al comparar con \ref{MTZ}, que agregar la salida de la heurística como inicialización no produce ningún cambio en la ejecución del modelo.
+Vemos, al comparar con \ref{MTZ}, que agregar la salida de la heurística como inicialización el modelo converge $\approx 13\%$ más rapido. Las soluciones iniciales encontradas tienen valores mucho más cercanos al óptimo.
 
 \subsection{Subtours inicializado}
 \begin{figure}[H]
@@ -156,7 +155,7 @@ Total (root+branch&cut) =    1.56 sec. (276.30 ticks)
 \caption{Fragmento de la salida bajo la solapa \texttt{Engine Log}. Notar que esto se repite más de 30 veces.}
 \end{figure}
 
-
+En este caso notamos grandes diferencias con \ref{Subtours} en cuanto al gráfico de la solapa \texttt{Statistics}. Por empezar, la escala utilizada es un orden de magnitud más chica. En este caso, podemos apreciar mejor los valores de las soluciones obtenidas. Vemos como el rango de valores entre los cuales se mueven es mucho más chico.
 
 \printbibliography
 

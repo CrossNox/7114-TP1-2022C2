@@ -87,7 +87,7 @@ main {
   var opl = new IloOplModel(mod, cplex1);
   opl.addDataSource(dat);
   opl.generate();
-  //cplex1.addMIPStart(opl.x,opl.values);
+  cplex1.addMIPStart(opl.x,opl.values);
 
   if (cplex1.solve()) {
     writeln("solution: ", cplex1.getObjValue(), " /size: ", dat.n, " /time: ",
