@@ -47,7 +47,7 @@ height=21cm,top=3.7cm,headsep=1cm, headheight=1.6cm,footskip=1.2cm]{geometry}
 \newpage
 
 \section{Análisis de las soluciones}
-Si bien ambas soluciones proveen una solución con valor del objetivo $\approx 5249.622$, hay diferencias en los tiempos de ejecución, los cuales se detallan a continuación en \ref{MTZ} y \ref{Subtours}. También se detallan las diferencias en las estrategias para eliminar subtours, mediante las restricciones:
+Si bien ambas soluciones proveen una solución con valor del objetivo $\approx 5249.622$, hay diferencias en los tiempos de ejecución, los cuales se detallan a continuación en \ref{MTZ} y \ref{Subtours}. También se detallan las diferencias en las estrategias para eliminar subtours, mediante las restricciones de cada modelo.
 
 \subsection{MTZ}\label{MTZ}
 Uno de los dos modelos dados por la cátedra es el ya conocido MTZ. En esta estrategia, se emplean variables enteras $U_i, i=2,\ldots,n$ que indican el orden en el cual se pasa por la ciudad $i$.
@@ -82,9 +82,16 @@ Total (root+branch&cut) =   85.82 sec. (44527.24 ticks)
 
 Notemos que la solución se alcanza en un tiempo de $85.82$ segundos (más algunos segundos de inicialización).
 
-\subsection{Subtours}\label{Subtours}
-En este segundo modelo,
+El valor óptimo inicial corresponde al costo de la solución con las ciudades ordenadas, pero todas las soluciones óptimas encontradas luego son estrictamente mejores que la anterior.
 
+\subsection{Subtours}\label{Subtours}
+Este modelo es conocido como \texttt{DFJ} por Dantzig, Fulkerson, Jhonson. En cada ejecución  (ya que se implementa de modo iterativo) se toma el subtour $S$ de menor cardinalidad. Para ese subtour, se agregan restricciones que dicen que se sale del subtour al menos una vez.
+
+\begin{align}
+	\forall S \sum_{i \in S} \sum_{j \notin S} X_{ij} \leq \mid S \mid - 1
+\end{align}
+
+Por ello podemos tener solo las variables $X_{ij},~j >i$, ya que $\forall i \in S$, necesitamos solo las aristas de entrada o de salida de las mismas, y tanto $X_{ij}$ como $X_{ji}$ sirven para indicar que se sale del subtour por $i$.
 
 \begin{figure}[H]
 \centering
@@ -95,8 +102,8 @@ En este segundo modelo,
 \begin{figure}[H]
 \begin{minted}[]{text}
 Root node processing (before b&c):
-  Real time             =    1.46 sec. (305.17 ticks)
 Parallel b&c, 32 threads:
+  Real time             =    1.46 sec. (305.17 ticks)
   Real time             =    0.00 sec. (0.00 ticks)
   Sync time (average)   =    0.00 sec.
   Wait time (average)   =    0.00 sec.
@@ -105,6 +112,8 @@ Total (root+branch&cut) =    1.46 sec. (305.17 ticks)
 \end{minted}
 \caption{Fragmento de la salida bajo la solapa \texttt{Engine Log}. Notar que esto se repite más de 30 veces.}
 \end{figure}
+
+Los óptimos encontrados oscilan entre valores muy bajos en la escala (notar que va de 10.000 en 10.000) a valores superiores a 30.000. Esto se debe a que luego de cada paso de eliminación de subtours, al conectarse el subtour eliminado, la distancia total suele ser grande. Luego, al ejecutarse el motor de optimización, notemos que siempre posterior a cada uno de estos pasos se acerca al valor óptimo.
 
 \section{Modificación de la heurística de la segunda entrega}
 La heurística modificada se puede consultar en el notebook \texttt{Greedy+2opt-Problema3.ipynb}. Como resumen, utilizando una heurística de vecino más cercano, se genera un camino que empieza desde cada ciudad. Luego, se toma el de menor costo (distancia total recorrida) y se aplica 2-OPT como optimización local. En la versión de la segunda entrega se generaba una cantidad razonable de candidatos y se optimizaba localmente durante una hora como máximo. Para cumplir con las capacidades, se revisaba también que el camino fuera válido.
@@ -132,7 +141,7 @@ Total (root+branch&cut) =   74.38 sec. (38133.19 ticks)
 \caption{Fragmento de la salida bajo la solapa \texttt{Engine Log}}
 \end{figure}
 
-Vemos, al comparar con \ref{MTZ}, que agregar la salida de la heurística como inicialización el modelo converge $\approx 13\%$ más rapido. Las soluciones iniciales encontradas tienen valores mucho más cercanos al óptimo.
+Vemos, al comparar con \ref{MTZ}, que agregar la salida de la heurística como inicialización el modelo converge $\approx 13\%$ más rápido. Las soluciones iniciales encontradas tienen valores mucho más cercanos al óptimo, dado que el valor inicial es mas cercano al optimo.
 
 \subsection{Subtours inicializado}
 \begin{figure}[H]
@@ -155,7 +164,14 @@ Total (root+branch&cut) =    1.56 sec. (276.30 ticks)
 \caption{Fragmento de la salida bajo la solapa \texttt{Engine Log}. Notar que esto se repite más de 30 veces.}
 \end{figure}
 
-En este caso notamos grandes diferencias con \ref{Subtours} en cuanto al gráfico de la solapa \texttt{Statistics}. Por empezar, la escala utilizada es un orden de magnitud más chica. En este caso, podemos apreciar mejor los valores de las soluciones obtenidas. Vemos como el rango de valores entre los cuales se mueven es mucho más chico.
+En este caso notamos grandes diferencias con \ref{Subtours} en cuanto al gráfico de la solapa \texttt{Statistics}. Por empezar, la escala utilizada es un orden de magnitud más chica. Por ello podemos apreciar mejor los valores de las soluciones obtenidas. Vemos como el rango de valores entre los cuales se mueven es mucho más chico.
+
+Al tener una inicialización \textit{razonable}, romper los subtours y conectarlos aumenta las distancias, pero jamas podrá superar el costo de 5411 de la heurística. En cambio, en esta instancia del problema, el tour que va en orden por las ciudades tiene costo aproximado de 30.000 (que vimos en \ref{Subtours}).
+
+\section{Conclusiones}
+En esta instancia particular del problema del viajante, el algoritmo DFJ encuentra el óptimo más rápidamente.
+
+Es importante remarcar que MTZ introduce más variables de decisión y una cantidad cuadrática de restricciones, pero permite resolver el problema en una sola ejecución. DFJ introduce una cantidad exponencial de restricciones al ir introduciendo nuevos subtours que se deban eliminar. Se ejecuta más de 30 veces en esta instancia hasta encontrar el óptimo.
 
 \printbibliography
 
